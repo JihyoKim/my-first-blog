@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<!-- 검색 결과 출력 -->
+		{% if resultlist %}
+			<ul>
+			{% for choice in resultlist %}
+				<li> 
+					<a href="{% url 'polls:detail' choice.question.id %}"> 
+					{{ choice.choice_text }} - {{ choice.question.question_text}} - {{ choice.question.customuser.id }} 
+					</a>
+				</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+	</body>
+</html>

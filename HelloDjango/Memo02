@@ -1,0 +1,25 @@
+polls
+	폴더 왼쪽클릭 -> Django -> Create application -> write "polls"
+	
+HelloDjango 폴더 -> settings.py -> INSTALLED_APPS = [] 안에 'polls', 추가 
+
+
+Pillow 설치 (social-auth-app-django) (disqus)
+	Window -> Preference ->PyDev -> Interpreters -> Python Interpreter -> 
+	Pillow가 없을 시 -> Install/Uninstall with pip -> install Pillow Run -> Apply&Close
+	
+Model 클래스를 새로 추가할시 Migration&Migrate 를 해야한다.
+
+Blog 폴더
+	HelloDjango -> Django -> Create application -> type 'Blog' -> Done
+	
+	
+OAuto (외부 로그인?)
+
+console.developers.google.com - 구글 개발자 사이트
+
+
+
+Git 설치
+GitHub 회원가입
+PythonAnyWhere 회원가입

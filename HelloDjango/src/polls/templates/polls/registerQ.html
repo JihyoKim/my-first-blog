@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>registerQ</title>
+	</head>
+		<body>
+			{% if error_message %} <!-- if error_message != None -->
+			<p>{{error_message}}</p>
+			{% endif %}
+			<form action="" method="post" enctype = "multipart/form-data">
+				{% csrf_token %}
+				<!--
+				form.as_p : <p></p> 태그 안에 입력양식 작성
+				form.as_table : <table></table> 태그 안에 기입 테이블 구현
+				-->
+				{{form.as_p}}
+				<input type="submit" value="질문 등록">
+			</form>
+		</body>
+</html>

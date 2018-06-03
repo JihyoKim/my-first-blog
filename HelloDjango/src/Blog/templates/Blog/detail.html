@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+	<a href="{% url 'blog:index' %}">메인으로</a>
+	{% if obj.author == request.user %}
+		<a href="{% url 'blog:delete' obj.id %}" >글 삭제</a>
+		<a href="{% url 'blog:update' obj.id %}" >글 수정</a>
+	{% endif %}
+		<table>
+			<tr>
+				<th>제목</th>
+				<td>
+					[ {{ obj.type.name }} ] 
+					{{ obj.headline }}
+				</td>
+			</tr>
+			<tr>
+				<th>글쓴이</th>
+				<td>{{ obj.author.username }}</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>
+					{% for file in obj.file_set.all %}
+						<a href="{{file.file.url}}">download</a><br>
+					{% endfor %}
+					{% for image in obj.image_set.all %}
+						<img src = "{{image.image.url}}" width = 300><br>
+					{% endfor %}
+					{{ obj.content }}
+				</td>
+			</tr>
+			<tr>
+				<th>작성일</th>
+				<td>{{ obj.pub_date }}</td>
+			</tr>
+		</table>
+		
+		{% load disqus_tags %}
+		{% disqus_show_comments %}
+		
+{% endblock %}

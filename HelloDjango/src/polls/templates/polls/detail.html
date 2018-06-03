@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="">
+	<title>{{ question_data.question_text }} 투표</title>
+</head>
+	<body>
+		<h1>{{ question_data.question_text }} 
+			{% if question_data.customuser.id == request.session.username %} <!-- 작성자id와 로그인id가 동일시 -->
+			<a href="{% url 'polls:deleteQ' question_data.id %}">질문삭제</a> 
+			{% endif %}
+		</h1>
+		<!-- question_data.customuser.id와 request.session.username이 동일 할 때 삭제, 버튼 ..?? 놓침 -->
+		<p>글쓴이: {{ question_data.customuser.id }}</p>
+		{% if question_data.image %}
+		<img src = "{{ question_data.image.url }}" width="400">
+		{% endif %}
+		<form action="{% url 'polls:vote' question_data.id %}" method = "POST">
+			{% csrf_token %}
+			{% for item in question_data.choice_set.all %}
+			<div>
+				<input type="radio" name="vote" value="{{ item.id }}"> {{ item.choice_text }}
+				{% if question_data.customuser.id == request.session.username %} 
+				<a href="{% url 'polls:deleteC' item.id %}">답변삭제</a>
+				{% endif %}
+			</div>
+			{% endfor %}
+			<!-- if question_data.choice_set.all != None -->
+			{% if question_data.choice_set.all %} 
+			<!-- 질문에 연결된 답변이 없는 경우를 확인 -->
+		<button type="submit">확인</button>
+			{% endif %}
+		</form>
+		{% if question_data.customuser.id == request.session.username %} 
+		<form action="{% url 'polls:registerC' question_data.id %}" method="GET">
+    		<button type="submit">항목 생성</button>
+    	{% endif %}
+		</form>
+		<form action="{% url 'polls:index' %}" method = "get">
+			<button type="submit">뒤로가기</button>
+		</form>
+		
+		<table>
+			<tr>
+				<th>글쓴이</th>
+				<th>댓글 내용</th>
+			</tr>
+			{% for comment in question_data.comment_set.all %}
+			<tr>
+				<td>
+					{{ comment.customuser.id }}
+				</td>
+				<td>
+					{% if comment.image %}
+					<img src = "{{ comment.image.url }}">
+					{% endif %}
+					{{ comment.text }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		<form action="" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<table>
+				{{ form.as_table }}
+			</table>
+			<input type="submit" value="댓글달기">
+		</form>
+	</body>
+</html>

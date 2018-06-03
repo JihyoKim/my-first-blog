@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="">
+	<title>투표 메인 APP</title>
+</head>
+	<body>
+		<!-- { %if request.session.LoginState == True % } -->
+		{% if user.is_authenticated %}
+			<!-- <p>{{ request.session.username }}님 환영합니다!</p> -->
+			<p>{{ user.username }}님 환영합니다!</p>
+			<a href="{% url 'customuser:Logout' %}">로그아웃</a>
+		{% else %}
+			<a href="{% url 'customuser:sign' %}">회원가입</a>
+			<a href="{% url 'customuser:Login' %}">로그인</a>
+		{% endif %}
+		<ul>
+			{% for item in data %}
+				<li>
+					<a href="/polls/{{ item.id }}/"> {{ item.question_text }} - {{ item.customuser.id }} | {{ item.pub_date }} </a>
+				</li>
+			{% endfor %}
+		</ul>
+		<!-- 질문 등록 -->
+		{% if request.session.LoginState == True %}
+		<a href="{% url 'polls:registerQ' %}">질문 등록</a>
+		{% endif %}
+	<!-- <a href="{  % url 'polls:registerC' %  }">답변 등록</a> -->
+	</body>
+</html>
